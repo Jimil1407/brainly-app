@@ -7,7 +7,7 @@ if (!JWT_SECRET) {
   throw new Error("JWT_SECRET is not set");
 }
 
-const verifyToken = (req: Request & { userId: string }, res: Response, next: NextFunction) => {
+const verifyToken = (req: Request & { userId?: string }, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
