@@ -112,9 +112,24 @@ app.get("/api/v1/content", verifyToken, async (req: any, res) => {
 });
 
 app.delete("/api/v1/content", verifyToken, async (req: any, res) => {
+  try {
+    if(!await connectDB()) {
+      return res.status(500).json({ message: "Error connecting to database" });
+    }
 
+    const { id } = req.body;
+    const userId = req.userId;
+    const content = await contents.findOne({ _id: new mongoose.Types.ObjectId(id), userId });
+    if(!content) {
+      return res.status(404).json({ message: "Content not found" });
+    }
+    await content.deleteOne();
+    res.status(200).json({ message: "Content deleted successfully" });
+  } catch (error) {
+    console.error("Delete content error:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
-);
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
