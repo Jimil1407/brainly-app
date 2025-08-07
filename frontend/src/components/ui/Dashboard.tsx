@@ -75,7 +75,6 @@ export const Dashboard = () => {
   };
 
   const filteredContent = contentData?.data.contents.filter((content) => {
-    console.log('Filtering content:', content.type, 'activeTab:', activeTab);
     if (activeTab === 'all') return true;
     return content.type === activeTab;
   }) || [];

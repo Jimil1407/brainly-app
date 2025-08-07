@@ -26,13 +26,8 @@ function App() {
     }
   }, []);
 
-  const handleLoginSuccess = (token: string) => {
+  const handleLoginSuccess = (_token: string) => {
     setIsAuthenticated(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
   };
 
   if (!isAuthenticated) {

@@ -1,4 +1,4 @@
-import { Brain, Twitter, Play, FileText, Link, Hash, LogOut } from 'lucide-react';
+import { Brain, Twitter, Play, FileText, Link, LogOut } from 'lucide-react';
 
 interface SidebarProps {
   activeTab: string;
