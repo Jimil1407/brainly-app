@@ -131,6 +131,49 @@ app.delete("/api/v1/content", verifyToken, async (req: any, res) => {
   }
 });
 
+app.post("/api/v1/content/share", verifyToken, async (req: any, res) => {
+  try {
+    if(!await connectDB()) {
+      return res.status(500).json({ message: "Error connecting to database" });
+    }
+
+    const { id } = req.body;
+    const userId = req.userId;
+    
+    const content = await contents.findOne({ _id: new mongoose.Types.ObjectId(id), userId });
+    if(!content) {
+      return res.status(404).json({ message: "Content not found" });
+    }
+
+    let existingLink = await links.findOne({ contentId: content._id });
+    if(existingLink) {
+      return res.status(200).json({ 
+        message: "Shareable link already exists", 
+        shareableLink: `${req.protocol}://${req.get('host')}/api/v1/content/shared/${existingLink.hash}`,
+        hash: existingLink.hash
+      });
+    }
+
+    const hash = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    
+    const shareableLink = new links({ 
+      hash, 
+      contentId: content._id, 
+      userId: content.userId 
+    });
+    await shareableLink.save();
+    
+    res.status(200).json({ 
+      message: "Shareable link created successfully", 
+      shareableLink: `${req.protocol}://${req.get('host')}/api/v1/content/shared/${hash}`,
+      hash: hash
+    });
+  } catch (error) {
+    console.error("Share content error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
   console.log("http://localhost:3000");
