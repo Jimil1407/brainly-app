@@ -6,6 +6,7 @@ import verifyToken from "../middleware/verfy";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cors from "cors";
 
 dotenv.config();
 
@@ -16,6 +17,15 @@ if (!JWT_SECRET) {
 }
 
 const app = express();
+
+// CORS middleware
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 app.post("/api/v1/signup", async (req, res) => {
@@ -170,6 +180,43 @@ app.post("/api/v1/content/share", verifyToken, async (req: any, res) => {
     });
   } catch (error) {
     console.error("Share content error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Public endpoint to access shared content by hash (no authentication required)
+app.get("/api/v1/content/shared/:hash", async (req, res) => {
+  try {
+    if(!await connectDB()) {
+      return res.status(500).json({ message: "Error connecting to database" });
+    }
+
+    const { hash } = req.params;
+    
+    // Find the shareable link by hash
+    const shareableLink = await links.findOne({ hash }).populate('contentId').populate('userId', 'username');
+    if(!shareableLink) {
+      return res.status(404).json({ message: "Shared content not found" });
+    }
+
+    // Type assertion to handle populated fields
+    const populatedLink = shareableLink as any;
+
+    // Return the content details
+    res.status(200).json({ 
+      message: "Shared content retrieved successfully",
+      content: {
+        id: populatedLink.contentId._id,
+        link: populatedLink.contentId.link,
+        type: populatedLink.contentId.type,
+        title: populatedLink.contentId.title,
+        tags: populatedLink.contentId.tags,
+        sharedBy: populatedLink.userId.username,
+        sharedAt: populatedLink.createdAt
+      }
+    });
+  } catch (error) {
+    console.error("Get shared content error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
