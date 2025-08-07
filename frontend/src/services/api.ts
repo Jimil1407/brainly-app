@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.PROD 
-  ? 'https://your-backend-domain.onrender.com/api/v1'
+  ? 'https://second-brain-6avd.onrender.com/api/v1'
   : 'http://localhost:3000/api/v1';
 
 const api = axios.create({
