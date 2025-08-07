@@ -1,6 +1,6 @@
 import { Twitter, Play, FileText, Link, Share2, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
-import type { Content } from '../services/api';
+import type { Content } from '../../services/api';
 
 const formatDate = (dateString: string | undefined | null): string => {
   try {

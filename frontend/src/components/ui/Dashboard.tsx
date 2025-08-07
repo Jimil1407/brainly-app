@@ -5,7 +5,7 @@ import { ContentCard } from './ContentCard';
 import { AddContentModal } from './AddContentModal';
 import { Button } from './button';
 import { Share2, Plus } from 'lucide-react';
-import { contentAPI } from '../services/api';
+import { contentAPI } from '../../services/api';
 import { toast } from 'react-hot-toast';
 
 export const Dashboard = () => {

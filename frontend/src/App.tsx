@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
-import { Dashboard } from './components/Dashboard';
-import { LoginForm } from './components/LoginForm';
-import { SignupForm } from './components/SignupForm';
+import { Dashboard } from './components/ui/Dashboard';
+import { LoginForm } from './components/ui/LoginForm';
+import { SignupForm } from './components/ui/SignupForm';
 import './App.css';
 
 const queryClient = new QueryClient({

@@ -1,36 +1,44 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { authAPI } from '../services/api';
+import { authAPI } from '../../services/api';
 import { toast } from 'react-hot-toast';
 import { Brain } from 'lucide-react';
 
-interface LoginFormProps {
-  onSuccess: (token: string) => void;
-  onSwitchToSignup: () => void;
+interface SignupFormProps {
+  onSuccess: () => void;
+  onSwitchToLogin: () => void;
 }
 
-export const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
+export const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
+    confirmPassword: '',
   });
 
-  const loginMutation = useMutation({
-    mutationFn: authAPI.signin,
-    onSuccess: (response) => {
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-      onSuccess(token);
-      toast.success('Login successful!');
+  const signupMutation = useMutation({
+    mutationFn: authAPI.signup,
+    onSuccess: () => {
+      toast.success('Account created successfully! Please sign in.');
+      onSuccess();
     },
     onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Login failed');
+      toast.error(error.response?.data?.message || 'Signup failed');
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    loginMutation.mutate(formData);
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+
+    signupMutation.mutate({
+      username: formData.username,
+      password: formData.password,
+    });
   };
 
   return (
@@ -42,8 +50,8 @@ export const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
               <Brain className="w-7 h-7 text-white" />
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h1>
-          <p className="text-gray-600">Sign in to your Second Brain</p>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Create Account</h1>
+          <p className="text-gray-600">Join Second Brain today</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -56,8 +64,10 @@ export const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
               value={formData.username}
               onChange={(e) => setFormData({ ...formData, username: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5244df] focus:border-transparent"
-              placeholder="Enter your username"
+              placeholder="Choose a username"
               required
+              minLength={3}
+              maxLength={20}
             />
           </div>
 
@@ -70,28 +80,43 @@ export const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5244df] focus:border-transparent"
-              placeholder="Enter your password"
+              placeholder="Create a password"
+              required
+              minLength={8}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              value={formData.confirmPassword}
+              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5244df] focus:border-transparent"
+              placeholder="Confirm your password"
               required
             />
           </div>
 
           <button
             type="submit"
-            disabled={loginMutation.isPending}
+            disabled={signupMutation.isPending}
             className="w-full bg-[#5244df] text-white py-2 px-4 rounded-lg hover:bg-[#5244df]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
+            {signupMutation.isPending ? 'Creating account...' : 'Create Account'}
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-gray-600">
-            Don't have an account?{' '}
+            Already have an account?{' '}
             <button
-              onClick={onSwitchToSignup}
+              onClick={onSwitchToLogin}
               className="text-[#5244df] hover:text-[#5244df]/80 font-medium"
             >
-              Sign up
+              Sign in
             </button>
           </p>
         </div>
