@@ -81,7 +81,7 @@ export const Dashboard = () => {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen">
+      <div className="flex min-h-screen">
         <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-gray-500">Loading...</div>
@@ -92,7 +92,7 @@ export const Dashboard = () => {
 
   if (error) {
     return (
-      <div className="flex h-screen">
+      <div className="flex min-h-screen">
         <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-red-500">Error loading content</div>
@@ -102,7 +102,7 @@ export const Dashboard = () => {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
       
       <div className="flex-1 bg-gray-50 overflow-auto">

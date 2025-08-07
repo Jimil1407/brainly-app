@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import { Dashboard } from './components/ui/Dashboard';
 import { LoginForm } from './components/ui/LoginForm';
 import { SignupForm } from './components/ui/SignupForm';
+import { Footer } from './components/ui/Footer';
 import './App.css';
 
 const queryClient = new QueryClient({
@@ -34,17 +35,22 @@ function App() {
     return (
       <QueryClientProvider client={queryClient}>
         <Toaster position="top-right" />
-        {isSignup ? (
-          <SignupForm
-            onSuccess={() => setIsSignup(false)}
-            onSwitchToLogin={() => setIsSignup(false)}
-          />
-        ) : (
-          <LoginForm
-            onSuccess={handleLoginSuccess}
-            onSwitchToSignup={() => setIsSignup(true)}
-          />
-        )}
+        <div className="min-h-screen flex flex-col">
+          <div className="flex-1">
+            {isSignup ? (
+              <SignupForm
+                onSuccess={() => setIsSignup(false)}
+                onSwitchToLogin={() => setIsSignup(false)}
+              />
+            ) : (
+              <LoginForm
+                onSuccess={handleLoginSuccess}
+                onSwitchToSignup={() => setIsSignup(true)}
+              />
+            )}
+          </div>
+          <Footer />
+        </div>
       </QueryClientProvider>
     );
   }
@@ -52,7 +58,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster position="top-right" />
-      <Dashboard />
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-1">
+          <Dashboard />
+        </div>
+        <Footer />
+      </div>
     </QueryClientProvider>
   );
 }

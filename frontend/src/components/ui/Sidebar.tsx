@@ -16,7 +16,7 @@ const navigationItems = [
 
 export const Sidebar = ({ activeTab, onTabChange, onLogout }: SidebarProps) => {
   return (
-    <div className="w-64 bg-gray-50 h-screen p-6 border-r border-gray-200">
+    <div className="w-64 bg-gray-50 min-h-screen p-6 border-r border-gray-200">
       {/* Brand */}
       <div className="flex items-center gap-3 mb-8">
         <div className="w-8 h-8 bg-[#5244df] rounded-lg flex items-center justify-center">
