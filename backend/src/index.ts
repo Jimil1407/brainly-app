@@ -177,4 +177,4 @@ app.post("/api/v1/content/share", verifyToken, async (req: any, res) => {
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
   console.log("http://localhost:3000");
-});
+}); 
