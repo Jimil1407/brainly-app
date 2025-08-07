@@ -7,7 +7,7 @@ COPY backend/package*.json ./
 COPY backend/bun.lock ./
 
 # Install dependencies
-RUN bun install --frozen-lockfile
+RUN bun install
 
 # Copy backend source code
 COPY backend/ ./
