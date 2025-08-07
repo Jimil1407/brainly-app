@@ -21,6 +21,8 @@ export const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
     onSuccess: () => {
       toast.success('Account created successfully! Please sign in.');
       onSuccess();
+      // Clear form data after successful signup
+      setFormData({ username: '', password: '', confirmPassword: '' });
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || 'Signup failed');
@@ -39,6 +41,9 @@ export const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
       username: formData.username,
       password: formData.password,
     });
+    
+    // Clear password fields immediately after submission
+    setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));
   };
 
   return (

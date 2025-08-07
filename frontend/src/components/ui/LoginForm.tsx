@@ -22,6 +22,8 @@ export const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
       localStorage.setItem('token', token);
       onSuccess(token);
       toast.success('Login successful!');
+      // Clear form data after successful login
+      setFormData({ username: '', password: '' });
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || 'Login failed');
@@ -31,6 +33,8 @@ export const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     loginMutation.mutate(formData);
+    // Clear password field immediately after submission
+    setFormData(prev => ({ ...prev, password: '' }));
   };
 
   return (

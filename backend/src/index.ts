@@ -7,6 +7,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 
 dotenv.config();
 
@@ -45,7 +46,26 @@ app.use(cors({
 
 app.use(express.json());
 
-app.post("/api/v1/signup", async (req, res) => {
+// Rate limiting for auth endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // limit each IP to 5 requests per windowMs
+  message: { message: 'Too many login attempts, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Security headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  next();
+});
+
+app.post("/api/v1/signup", authLimiter, async (req, res) => {
   try {
     const signupSchema = z.object({
       username: z.string().min(3).max(20),
@@ -74,7 +94,7 @@ app.post("/api/v1/signup", async (req, res) => {
   }
 });
 
-app.post("/api/v1/signin", async (req, res) => {
+app.post("/api/v1/signin", authLimiter, async (req, res) => {
   try {
     if(!await connectDB()) {
       return res.status(500).json({ message: "Error connecting to database" });
