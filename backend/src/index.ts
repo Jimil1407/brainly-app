@@ -207,7 +207,8 @@ app.post("/api/v1/content/share", verifyToken, async (req: any, res) => {
     const shareableLink = new links({ 
       hash, 
       contentId: content._id, 
-      userId: content.userId 
+      userId: content.userId,
+      type: 'individual'
     });
     await shareableLink.save();
     
@@ -255,6 +256,88 @@ app.get("/api/v1/content/shared/:hash", async (req, res) => {
     });
   } catch (error) {
     console.error("Get shared content error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/api/v1/content/shareAll", verifyToken, async (req: any, res) => {
+  try {
+    if(!await connectDB()) {
+      return res.status(500).json({ message: "Error connecting to database" });
+    }
+
+    const userId = req.userId;
+    
+    // Check if user already has a shareAll link
+    let existingShareAllLink = await links.findOne({ userId, type: 'shareAll' });
+    if(existingShareAllLink) {
+      return res.status(200).json({ 
+        message: "Share all link already exists", 
+        shareableLink: `${req.protocol}://${req.get('host')}/api/v1/content/sharedAll/${existingShareAllLink.hash}`,
+        hash: existingShareAllLink.hash
+      });
+    }
+
+    // Create a unique hash for shareAll
+    const hash = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    
+    const shareAllLink = new links({ 
+      hash, 
+      userId: userId,
+      type: 'shareAll' // Add type to distinguish from individual content shares
+    });
+    await shareAllLink.save();
+    
+    res.status(200).json({ 
+      message: "Share all link created successfully", 
+      shareableLink: `${req.protocol}://${req.get('host')}/api/v1/content/sharedAll/${hash}`,
+      hash: hash
+    });
+  } catch (error) {
+    console.error("Share all content error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Public endpoint to access all shared content by hash (no authentication required)
+app.get("/api/v1/content/sharedAll/:hash", async (req, res) => {
+  try {
+    if(!await connectDB()) {
+      return res.status(500).json({ message: "Error connecting to database" });
+    }
+
+    const { hash } = req.params;
+    
+    // Find the shareAll link by hash
+    const shareAllLink = await links.findOne({ hash, type: 'shareAll' }).populate('userId', 'username');
+    if(!shareAllLink) {
+      return res.status(404).json({ message: "Shared content not found" });
+    }
+
+    // Get all content for this user
+    const userContents = await contents.find({ userId: shareAllLink.userId });
+    
+    // Format the content
+    const formattedContents = userContents.map(content => ({
+      id: content._id,
+      link: content.link,
+      type: content.type,
+      title: content.title,
+      tags: content.tags
+    }));
+
+    // Type assertion to handle populated fields
+    const populatedLink = shareAllLink as any;
+
+    res.status(200).json({ 
+      message: "All shared content retrieved successfully",
+      sharedBy: populatedLink.userId.username,
+      sharedAt: populatedLink.createdAt,
+      totalContent: formattedContents.length,
+      contents: formattedContents
+    });
+  } catch (error) {
+    console.error("Get shared all content error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

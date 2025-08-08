@@ -60,6 +60,18 @@ export const Dashboard = () => {
     },
   });
 
+  // Share all content mutation
+  const shareAllMutation = useMutation({
+    mutationFn: contentAPI.shareAll,
+    onSuccess: (data) => {
+      navigator.clipboard.writeText(data.data.shareableLink);
+      toast.success('Share all link copied to clipboard!');
+    },
+    onError: () => {
+      toast.error('Failed to create share all link');
+    },
+  });
+
   const handleAddContent = (data: { link: string; type: string; title: string; tags: string }) => {
     createMutation.mutate(data);
   };
@@ -117,10 +129,8 @@ export const Dashboard = () => {
                 size="md"
                 text="Share Brain"
                 startIcon={<Share2 size={16} />}
-                onClick={() => {
-                  // TODO: Implement share brain functionality
-                  toast('Share brain feature coming soon!');
-                }}
+                onClick={() => shareAllMutation.mutate()}
+                disabled={shareAllMutation.isPending}
               />
               
               <Button

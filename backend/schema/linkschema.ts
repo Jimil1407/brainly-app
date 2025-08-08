@@ -9,12 +9,17 @@ const linkSchema = new mongoose.Schema({
     contentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Content',
-        required: true
+        required: false // Made optional for shareAll functionality
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    type: {
+        type: String,
+        enum: ['individual', 'shareAll'],
+        default: 'individual'
     },
     createdAt: {
         type: Date,

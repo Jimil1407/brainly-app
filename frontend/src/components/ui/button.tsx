@@ -5,6 +5,7 @@ interface ButtonProps {
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
   onClick: () => void;
+  disabled?: boolean;
 }
 
 
@@ -24,8 +25,9 @@ export const Button = (props : ButtonProps) => {
 
   return (
     <button 
-      className={`${baseClasses} ${buttonVariant[props.variant]} ${sizeClasses[props.size]}`} 
+      className={`${baseClasses} ${buttonVariant[props.variant]} ${sizeClasses[props.size]} ${props.disabled ? 'opacity-50 cursor-not-allowed' : ''}`} 
       onClick={props.onClick}
+      disabled={props.disabled}
     >
       {props.startIcon && <span className="flex-shrink-0">{props.startIcon}</span>}
       {props.text}

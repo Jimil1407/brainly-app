@@ -71,6 +71,8 @@ export const contentAPI = {
   delete: (id: string) => api.delete('/content', { data: { id } }),
   
   share: (id: string) => api.post<ShareableLink>('/content/share', { id }),
+  
+  shareAll: () => api.post<ShareableLink>('/content/shareAll'),
 };
 
 // Public APIs
