@@ -5,7 +5,6 @@ import { Dashboard } from './components/ui/Dashboard';
 import { LoginForm } from './components/ui/LoginForm';
 import { SignupForm } from './components/ui/SignupForm';
 import { Footer } from './components/ui/Footer';
-import './App.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {
