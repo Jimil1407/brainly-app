@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
+import type { PopulatedLink } from "../interfaces/sharelink";
 
 dotenv.config();
 
@@ -19,7 +20,6 @@ if (!JWT_SECRET) {
 
 const app = express();
 
-// CORS middleware
 const allowedOrigins = [
   'http://localhost:5173', 
   'http://localhost:5174', 
@@ -223,7 +223,6 @@ app.post("/api/v1/content/share", verifyToken, async (req: any, res) => {
   }
 });
 
-// Public endpoint to access shared content by hash (no authentication required)
 app.get("/api/v1/content/shared/:hash", async (req, res) => {
   try {
     if(!await connectDB()) {
@@ -232,16 +231,14 @@ app.get("/api/v1/content/shared/:hash", async (req, res) => {
 
     const { hash } = req.params;
     
-    // Find the shareable link by hash
     const shareableLink = await links.findOne({ hash }).populate('contentId').populate('userId', 'username');
     if(!shareableLink) {
       return res.status(404).json({ message: "Shared content not found" });
     }
 
-    // Type assertion to handle populated fields
-    const populatedLink = shareableLink as any;
+    const populatedLink = shareableLink as unknown as PopulatedLink;
+    //console.log(populatedLink);
 
-    // Return the content details
     res.status(200).json({ 
       message: "Shared content retrieved successfully",
       content: {
@@ -268,7 +265,6 @@ app.post("/api/v1/content/shareAll", verifyToken, async (req: any, res) => {
 
     const userId = req.userId;
     
-    // Check if user already has a shareAll link
     let existingShareAllLink = await links.findOne({ userId, type: 'shareAll' });
     if(existingShareAllLink) {
       return res.status(200).json({ 
@@ -278,13 +274,12 @@ app.post("/api/v1/content/shareAll", verifyToken, async (req: any, res) => {
       });
     }
 
-    // Create a unique hash for shareAll
     const hash = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     
     const shareAllLink = new links({ 
       hash, 
       userId: userId,
-      type: 'shareAll' // Add type to distinguish from individual content shares
+      type: 'shareAll'
     });
     await shareAllLink.save();
     
@@ -299,7 +294,6 @@ app.post("/api/v1/content/shareAll", verifyToken, async (req: any, res) => {
   }
 });
 
-// Public endpoint to access all shared content by hash (no authentication required)
 app.get("/api/v1/content/sharedAll/:hash", async (req, res) => {
   try {
     if(!await connectDB()) {
@@ -308,16 +302,13 @@ app.get("/api/v1/content/sharedAll/:hash", async (req, res) => {
 
     const { hash } = req.params;
     
-    // Find the shareAll link by hash
     const shareAllLink = await links.findOne({ hash, type: 'shareAll' }).populate('userId', 'username');
     if(!shareAllLink) {
       return res.status(404).json({ message: "Shared content not found" });
     }
 
-    // Get all content for this user
     const userContents = await contents.find({ userId: shareAllLink.userId });
     
-    // Format the content
     const formattedContents = userContents.map(content => ({
       id: content._id,
       link: content.link,
@@ -326,8 +317,7 @@ app.get("/api/v1/content/sharedAll/:hash", async (req, res) => {
       tags: content.tags
     }));
 
-    // Type assertion to handle populated fields
-    const populatedLink = shareAllLink as any;
+    const populatedLink = shareAllLink as unknown as PopulatedLink;
 
     res.status(200).json({ 
       message: "All shared content retrieved successfully",
