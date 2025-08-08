@@ -28,6 +28,7 @@ const allowedOrigins = [
   'https://second-brain-peach.vercel.app'
 ].filter(Boolean);
 
+//CORS
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
