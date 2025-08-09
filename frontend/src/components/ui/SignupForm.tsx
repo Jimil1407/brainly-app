@@ -21,7 +21,6 @@ export const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
     onSuccess: () => {
       toast.success('Account created successfully! Please sign in.');
       onSuccess();
-      // Clear form data after successful signup
       setFormData({ username: '', password: '', confirmPassword: '' });
     },
     onError: (error: any) => {
@@ -82,6 +81,7 @@ export const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
             </label>
             <input
               type="password"
+              autoComplete="new-password"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#5244df] focus:border-transparent"
