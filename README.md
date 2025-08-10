@@ -274,17 +274,6 @@ git push origin feature/amazing-feature
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
----
-
-## 🙏 Acknowledgments
-
-- **React Team** - For the amazing framework
-- **Vite Team** - For the lightning-fast build tool
-- **Tailwind CSS** - For the utility-first CSS framework
-- **Bun Team** - For the fast JavaScript runtime
-- **Vercel & Render** - For the hosting platforms
-
----
 
 <div align="center">
 
