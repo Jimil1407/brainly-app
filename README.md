@@ -14,7 +14,6 @@
 
 - [✨ Features](#-features)
 - [🛠️ Tech Stack](#️-tech-stack)
-- [📸 Screenshots](#-screenshots)
 - [⚡ Quick Start](#-quick-start)
 - [🔧 Installation](#-installation)
 - [📁 Project Structure](#-project-structure)
