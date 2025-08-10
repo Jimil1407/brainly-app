@@ -6,16 +6,6 @@
 
 **Organize, save, and share your digital knowledge with ease**
 
-[![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0.0-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-18.0.0-339933?style=for-the-badge&logo=nodedotjs)](https://nodejs.org/)
-[![Bun](https://img.shields.io/badge/Bun-1.2.10-000000?style=for-the-badge&logo=bun)](https://bun.sh/)
-[![Vite](https://img.shields.io/badge/Vite-5.0.0-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.3.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Online-00C851?style=for-the-badge)](https://second-brain-app.vercel.app)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
-
 </div>
 
 ---
@@ -23,7 +13,6 @@
 ## 📖 Table of Contents
 
 - [✨ Features](#-features)
-- [🚀 Live Demo](#-live-demo)
 - [🛠️ Tech Stack](#️-tech-stack)
 - [📸 Screenshots](#-screenshots)
 - [⚡ Quick Start](#-quick-start)
@@ -92,25 +81,6 @@
 - **Render** - Backend hosting
 - **GitHub** - Version control
 
----
-
-## 📸 Screenshots
-
-<div align="center">
-
-### 🏠 Dashboard
-![Dashboard](https://via.placeholder.com/800x400/5244df/ffffff?text=Dashboard+View)
-
-### 🔐 Authentication
-![Login](https://via.placeholder.com/400x300/5244df/ffffff?text=Login+Form)
-
-### ➕ Add Content
-![Add Content](https://via.placeholder.com/400x300/5244df/ffffff?text=Add+Content+Modal)
-
-### 📱 Mobile View
-![Mobile](https://via.placeholder.com/300x600/5244df/ffffff?text=Mobile+View)
-
-</div>
 
 ---
 
