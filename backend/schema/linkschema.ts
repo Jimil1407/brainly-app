@@ -9,7 +9,7 @@ const linkSchema = new mongoose.Schema({
     contentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Content',
-        required: false // Made optional for shareAll functionality
+        required: false 
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
