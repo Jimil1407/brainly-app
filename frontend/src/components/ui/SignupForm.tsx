@@ -20,8 +20,8 @@ export const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
     mutationFn: authAPI.signup,
     onSuccess: () => {
       toast.success('Account created successfully! Please sign in.');
-      onSuccess();
       setFormData({ username: '', password: '', confirmPassword: '' });
+      onSuccess();
     },
     onError: (error: any) => {
       toast.error(error.response?.data?.message || 'Signup failed');
