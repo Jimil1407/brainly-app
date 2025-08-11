@@ -9,7 +9,7 @@
     "dev:frontend": "cd frontend && npm run dev",
     "build": "cd frontend && npm run build",
     "install:all": "npm install && cd backend && bun install && cd ../frontend && npm install",
-    "start": "cd backend && bun run start"
+    "start": "cd backend && bun run dev"
   },
   "keywords": [
     "react",
@@ -20,7 +20,7 @@
     "bookmarking",
     "second-brain"
   ],
-  "author": "Your Name",
+  "author": "Jimil Digaswala",
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^8.2.2"
