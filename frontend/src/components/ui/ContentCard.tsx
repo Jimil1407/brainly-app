@@ -69,14 +69,14 @@ export const ContentCard = ({ content, onShare, onDelete }: ContentCardProps) =>
         <div className="flex items-center gap-2">
           <button
             onClick={() => onShare(content._id)}
-            className="p-2 text-gray-400 hover:text-[#5244df] transition-colors"
+            className="p-2 text-gray-400 hover:text-[#5244df] transition-colors cursor-pointer"
             title="Share"
           >
             <Share2 className="w-4 h-4" />
           </button>
           <button
             onClick={() => onDelete(content._id)}
-            className="p-2 text-gray-400 hover:text-red-600 transition-colors"
+            className="p-2 text-gray-400 hover:text-red-600 transition-colors cursor-pointer"
             title="Delete"
           >
             <Trash2 className="w-4 h-4" />

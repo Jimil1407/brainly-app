@@ -35,7 +35,7 @@ export const Sidebar = ({ activeTab, onTabChange, onLogout }: SidebarProps) => {
             <button
               key={item.id}
               onClick={() => onTabChange(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors cursor-pointer ${
                 isActive
                   ? 'bg-[#5244df]/10 text-[#5244df]'
                   : 'text-gray-600 hover:bg-gray-100'
@@ -52,7 +52,7 @@ export const Sidebar = ({ activeTab, onTabChange, onLogout }: SidebarProps) => {
       <div className="mt-auto pt-6 border-t border-gray-200">
         <button
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-gray-600 hover:bg-gray-100 transition-colors"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer"
         >
           <LogOut className="w-5 h-5" />
           <span className="font-medium">Logout</span>

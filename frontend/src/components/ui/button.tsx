@@ -10,7 +10,7 @@ interface ButtonProps {
 
 
 export const Button = (props : ButtonProps) => {
-  const baseClasses = "flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors duration-200";
+  const baseClasses = "flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors duration-200 cursor-pointer";
 
   const buttonVariant = {
     primary: "bg-[#5244df] text-white hover:bg-[#5244df]/80",
