@@ -30,7 +30,6 @@ jobs:
     
     - name: Install dependencies
       run: |
-        npm install
         cd frontend && npm install
         cd ../backend && bun install
     
