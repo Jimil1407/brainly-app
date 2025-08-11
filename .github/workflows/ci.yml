@@ -44,7 +44,7 @@ jobs:
     - name: Run backend tests
       run: |
         cd backend
-        bun run dev
+        bun run test
       env:
         MONGODB_URI: ${{ secrets.MONGODB_URI }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}

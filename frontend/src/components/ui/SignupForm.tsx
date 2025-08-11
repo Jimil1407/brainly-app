@@ -23,8 +23,11 @@ export const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
       setFormData({ username: '', password: '', confirmPassword: '' });
       onSuccess();
     },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Signup failed');
+    onError: (error: unknown) => {
+      const errorMessage = error && typeof error === 'object' && 'response' in error 
+        ? (error.response as { data?: { message?: string } })?.data?.message 
+        : 'Signup failed';
+      toast.error(errorMessage || 'Signup failed');
     },
   });
 

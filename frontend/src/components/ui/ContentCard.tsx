@@ -8,7 +8,7 @@ const formatDate = (dateString: string | undefined | null): string => {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return 'Invalid date';
     return format(date, 'dd/MM/yyyy');
-  } catch (error) {
+  } catch {
     return 'Invalid date';
   }
 };

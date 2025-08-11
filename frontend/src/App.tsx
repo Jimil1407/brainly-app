@@ -26,7 +26,7 @@ function App() {
     }
   }, []);
 
-  const handleLoginSuccess = (_token: string) => {
+  const handleLoginSuccess = () => {
     setIsAuthenticated(true);
   };
 

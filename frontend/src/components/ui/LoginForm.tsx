@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 import { Brain } from 'lucide-react';
 
 interface LoginFormProps {
-  onSuccess: (token: string) => void;
+  onSuccess: () => void;
   onSwitchToSignup: () => void;
 }
 
@@ -20,12 +20,15 @@ export const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
     onSuccess: (response) => {
       const token = response.data.token;
       localStorage.setItem('token', token);
-      onSuccess(token);
+      onSuccess();
       toast.success('Login successful!');
       setFormData({ username: '', password: '' });
     },
-    onError: (error: any) => {
-      toast.error(error.response?.data?.message || 'Login failed');
+    onError: (error: unknown) => {
+      const errorMessage = error && typeof error === 'object' && 'response' in error 
+        ? (error.response as { data?: { message?: string } })?.data?.message 
+        : 'Login failed';
+      toast.error(errorMessage || 'Login failed');
     },
   });
 
