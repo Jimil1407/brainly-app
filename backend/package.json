@@ -6,7 +6,7 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "dev": "bun run src/index.ts",
-    "test": "bun build src/index.ts --outdir ./dist --target bun"
+    "test": "bun tsc"
   },
   "devDependencies": {
     "@types/bun": "latest",
