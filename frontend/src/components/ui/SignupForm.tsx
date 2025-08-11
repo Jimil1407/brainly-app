@@ -108,7 +108,7 @@ export const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
           <button
             type="submit"
             disabled={signupMutation.isPending}
-            className="w-full bg-[#5244df] text-white py-2 px-4 rounded-lg hover:bg-[#5244df]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#5244df] text-white py-2 px-4 rounded-lg hover:bg-[#5244df]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {signupMutation.isPending ? 'Creating account...' : 'Create Account'}
           </button>

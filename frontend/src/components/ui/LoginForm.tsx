@@ -80,7 +80,7 @@ export const LoginForm = ({ onSuccess, onSwitchToSignup }: LoginFormProps) => {
           <button
             type="submit"
             disabled={loginMutation.isPending}
-            className="w-full bg-[#5244df] text-white py-2 px-4 rounded-lg hover:bg-[#5244df]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[#5244df] text-white py-2 px-4 rounded-lg hover:bg-[#5244df]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {loginMutation.isPending ? 'Signing in...' : 'Sign In'}
           </button>

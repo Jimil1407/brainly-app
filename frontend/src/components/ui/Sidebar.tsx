@@ -1,4 +1,5 @@
 import { Brain, Twitter, Play, FileText, Link, LogOut } from 'lucide-react';
+import { Button } from './button';
 
 interface SidebarProps {
   activeTab: string;
@@ -50,13 +51,13 @@ export const Sidebar = ({ activeTab, onTabChange, onLogout }: SidebarProps) => {
 
       {/* Logout Button */}
       <div className="mt-auto pt-6 border-t border-gray-200">
-        <button
+        <Button
+          variant="secondary"
+          size="md"
+          text="Logout"
+          startIcon={<LogOut className="w-5 h-5" />}
           onClick={onLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-gray-600 hover:bg-gray-100 transition-colors cursor-pointer"
-        >
-          <LogOut className="w-5 h-5" />
-          <span className="font-medium">Logout</span>
-        </button>
+        />
       </div>
     </div>
   );
